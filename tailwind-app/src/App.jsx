@@ -1,14 +1,17 @@
 import './App.css'
 import Card from './Card'
-
+import Nav from './Nav'
+import About from './About'
+import ContactUs from './ContactUs'
+import TeamSection from './TeamSection'
+import NotFound from './NotFound'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 function App() {
-  
   const products = [
     {
       name: "Electronic Frozen Soap",
       model: "978-1-894542-44-9",
-      hexColor: "#494719",
       b64Image: "https://picsum.photos/seed/5htb27xeX/640/480",
       properties: "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
     },
@@ -53,18 +56,35 @@ function App() {
       model: "978-1-84836-342-7",
       b64Image: "https://picsum.photos/seed/Y5knt1/640/480",
       properties: "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
-    }];
+    }
+  ]
+
   return (
-    <>
-    <div key="product-grid" className="bg-orange-500 p-8 grid grid-cols-4 gap-4">      
-        {products.map(e=><div key={e.model+"div"}><Card key={e.model} title={e.name} paragraph={e.properties} image={e.b64Image} model={e.model}/></div>)}
-    </div>
-    <div>
-    {/* <ContactUs/>
-    <TeamSection/>
-    <About/> */}
-    </div>
-    </>
+    <BrowserRouter>
+      <Nav />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div className="bg-orange-500 p-8 grid grid-cols-4 gap-4">
+              {products.map((e) => (
+                <Card
+                  key={e.model}
+                  title={e.name}
+                  paragraph={e.properties}
+                  image={e.b64Image}
+                  model={e.model}
+                />
+              ))}
+            </div>
+          }
+        />
+        <Route path="/About" element={<About />} />
+        <Route path="/Contact" element={<ContactUs />} />
+        <Route path="/Team" element={<TeamSection />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
